@@ -304,7 +304,7 @@ VERSION 0.80
         the first time you load, or when you import new addresses.
 
    - Balances zero-conf tx and sent-to-self change
-        There was previously multiple issues with the way that Armory was adding
+        There were previously multiple issues with the way that Armory was adding
         up balances that included change outputs and zero-confirmation outputs.  
         This should be fixed  
 

@@ -50,7 +50,7 @@ Fuzzybear
 *             about 80%, and will be completed and integrated into the UI soon.
 *
 *             ***Armory has no independent networking components built in.
-*             Instead, it relies on on the Satoshi client to securely connect 
+*             Instead, it relies on the Satoshi client to securely connect 
 *             to peers, validate blockchain data, and broadcast transactions
 *             for us.  Although it was initially planned to cut the umbilical
 *             cord to the Satoshi client and implement independent networking,

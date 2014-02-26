@@ -7,7 +7,7 @@
 # We also bundle in signed information needed to download and verify
 # the latest version of the Satoshi client.  We use ATL's public key
 # hardcoded into armoryengine.py, for which the private key is on the
-# offline computer.  This is necessary because Armory is not guarnteed
+# offline computer.  This is necessary because Armory is not guaranteed
 # to have access to a GPG utility, but of course it can verify ECDSA
 # signatures...
 #

@@ -1460,7 +1460,7 @@ class ArmoryMainWindow(QMainWindow):
 
    #############################################################################
    def checkHaveBlockfiles(self):
-      return os.path.exists(os.path.join(TheBDM.btcdir, 'blocks'))
+      return os.path.exists(os.path.join(TheBDM.btcdir, 'blk0001.dat'))
 
    #############################################################################
    def onlineModeIsPossible(self):

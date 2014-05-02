@@ -13017,8 +13017,8 @@ class BlockDataManagerThread(threading.Thread):
       if not os.path.exists(self.btcdir):
          raise FileExistsError, ('Directory does not exist: %s' % self.btcdir)
 
-      blkdir = os.path.join(self.btcdir, 'blocks')
-      blk1st = os.path.join(blkdir, 'blk00000.dat')
+      blkdir = self.btcdir
+      blk1st = os.path.join(blkdir, 'blk0001.dat')
 
       # ... and its blk000X.dat files
       if not os.path.exists(blk1st):

@@ -189,29 +189,29 @@ USER_HOME_DIR    = ''
 BTC_HOME_DIR     = ''
 ARMORY_HOME_DIR  = ''
 LEVELDB_DIR      = ''
-SUBDIR = 'testnet3' if USE_TESTNET else ''
+SUBDIR = 'testnet' if USE_TESTNET else ''
 if OS_WINDOWS:
    OS_NAME         = 'Windows'
    OS_VARIANT      = platform.win32_ver()
    USER_HOME_DIR   = os.getenv('APPDATA')
-   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, 'Bitcoin', SUBDIR)
+   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, 'PPCoin', SUBDIR)
    ARMORY_HOME_DIR = os.path.join(USER_HOME_DIR, 'Armory', SUBDIR)
-   BLKFILE_DIR     = os.path.join(BTC_HOME_DIR, 'blocks')
+   BLKFILE_DIR     = BTC_HOME_DIR
 elif OS_LINUX:
    OS_NAME         = 'Linux'
    OS_VARIANT      = platform.linux_distribution()
    USER_HOME_DIR   = os.getenv('HOME')
-   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, '.bitcoin', SUBDIR)
+   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, '.ppcoin', SUBDIR)
    ARMORY_HOME_DIR = os.path.join(USER_HOME_DIR, '.armory', SUBDIR)
-   BLKFILE_DIR     = os.path.join(BTC_HOME_DIR, 'blocks')
+   BLKFILE_DIR     = BTC_HOME_DIR
 elif OS_MACOSX:
    platform.mac_ver()
    OS_NAME         = 'MacOSX'
    OS_VARIANT      = platform.mac_ver()
    USER_HOME_DIR   = os.path.expanduser('~/Library/Application Support')
-   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, 'Bitcoin', SUBDIR)
+   BTC_HOME_DIR    = os.path.join(USER_HOME_DIR, 'PPCoin', SUBDIR)
    ARMORY_HOME_DIR = os.path.join(USER_HOME_DIR, 'Armory', SUBDIR)
-   BLKFILE_DIR     = os.path.join(BTC_HOME_DIR, 'blocks')
+   BLKFILE_DIR     = BTC_HOME_DIR
 else:
    print '***Unknown operating system!'
    print '***Cannot determine default directory locations'
@@ -221,7 +221,7 @@ else:
 if not CLI_OPTIONS.satoshiHome.lower()=='default':
    success = True
    if USE_TESTNET:
-      testnetTry = os.path.join(CLI_OPTIONS.satoshiHome, 'testnet3')
+      testnetTry = os.path.join(CLI_OPTIONS.satoshiHome, 'testnet')
       if os.path.exists(testnetTry):
          CLI_OPTIONS.satoshiHome = testnetTry
 
@@ -336,26 +336,26 @@ class BadInputError(Exception): pass
 ##### MAIN NETWORK IS DEFAULT #####
 if not USE_TESTNET:
    # TODO:  The testnet genesis tx hash can't be the same...?
-   BITCOIN_PORT = 8333
-   BITCOIN_RPC_PORT = 8332
+   BITCOIN_PORT = 9901
+   BITCOIN_RPC_PORT = 9902
    ARMORY_RPC_PORT = 8225
-   MAGIC_BYTES = '\xf9\xbe\xb4\xd9'
-   GENESIS_BLOCK_HASH_HEX  = '6fe28c0ab6f1b372c1a6a246ae63f74f931e8365e15a089c68d6190000000000'
-   GENESIS_BLOCK_HASH      = 'o\xe2\x8c\n\xb6\xf1\xb3r\xc1\xa6\xa2F\xaec\xf7O\x93\x1e\x83e\xe1Z\x08\x9ch\xd6\x19\x00\x00\x00\x00\x00'
-   GENESIS_TX_HASH_HEX     = '3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a'
-   GENESIS_TX_HASH         = ';\xa3\xed\xfdz{\x12\xb2z\xc7,>gv\x8fa\x7f\xc8\x1b\xc3\x88\x8aQ2:\x9f\xb8\xaaK\x1e^J'
-   ADDRBYTE = '\x00'
-   P2SHBYTE = '\x05'
-   PRIVKEYBYTE = '\x80'
+   MAGIC_BYTES = '\xe6\xe8\xe9\xe5'
+   GENESIS_BLOCK_HASH_HEX  = 'e327cd80c8b17efda4ea08c5877e95d877462ab66349d5667167fe3200000000'
+   GENESIS_BLOCK_HASH      = '\xe3\'\xcd\x80\xc8\xb1~\xfd\xa4\xea\x08\xc5\x87~\x95\xd8wF*\xb6cI\xd5fqg\xfe2\x00\x00\x00\x00'
+   GENESIS_TX_HASH_HEX     = '3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a'#TODO kac
+   GENESIS_TX_HASH         = ';\xa3\xed\xfdz{\x12\xb2z\xc7,>gv\x8fa\x7f\xc8\x1b\xc3\x88\x8aQ2:\x9f\xb8\xaaK\x1e^J'#TODO kac
+   ADDRBYTE = '\x37'
+   P2SHBYTE = '\x75'
+   PRIVKEYBYTE = '\xb7'
 else:
-   BITCOIN_PORT = 18333
-   BITCOIN_RPC_PORT = 18332
+   BITCOIN_PORT = 9903
+   BITCOIN_RPC_PORT = 9904
    ARMORY_RPC_PORT     = 18225
-   MAGIC_BYTES  = '\x0b\x11\x09\x07'
-   GENESIS_BLOCK_HASH_HEX  = '43497fd7f826957108f4a30fd9cec3aeba79972084e90ead01ea330900000000'
-   GENESIS_BLOCK_HASH      = 'CI\x7f\xd7\xf8&\x95q\x08\xf4\xa3\x0f\xd9\xce\xc3\xae\xbay\x97 \x84\xe9\x0e\xad\x01\xea3\t\x00\x00\x00\x00'
-   GENESIS_TX_HASH_HEX     = '3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a'
-   GENESIS_TX_HASH         = ';\xa3\xed\xfdz{\x12\xb2z\xc7,>gv\x8fa\x7f\xc8\x1b\xc3\x88\x8aQ2:\x9f\xb8\xaaK\x1e^J'
+   MAGIC_BYTES  = '\xcb\xf2\xc0\xef'
+   GENESIS_BLOCK_HASH_HEX  = '069f7cc4ae81ca0c7c72cc30e68c65b017cd173e5096657f73bb57f701000000'
+   GENESIS_BLOCK_HASH      = '\x06\x9f|\xc4\xae\x81\xca\x0c|r\xcc0\xe6\x8ce\xb0\x17\xcd\x17>P\x96e\x7fs\xbbW\xf7\x01\x00\x00\x00'
+   GENESIS_TX_HASH_HEX     = '3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a'#TODO kac
+   GENESIS_TX_HASH         = ';\xa3\xed\xfdz{\x12\xb2z\xc7,>gv\x8fa\x7f\xc8\x1b\xc3\x88\x8aQ2:\x9f\xb8\xaaK\x1e^J'#TODO kac
    ADDRBYTE = '\x6f'
    P2SHBYTE = '\xc4'
    PRIVKEYBYTE = '\xef'
@@ -375,12 +375,12 @@ if not CLI_OPTIONS.rpcport == 'DEFAULT':
 
 
 BLOCKCHAINS = {}
-BLOCKCHAINS['\xf9\xbe\xb4\xd9'] = "Main Network"
+BLOCKCHAINS['\xe6\xe8\xe9\xe5'] = "Main Network"
 BLOCKCHAINS['\xfa\xbf\xb5\xda'] = "Old Test Network"
-BLOCKCHAINS['\x0b\x11\x09\x07'] = "Test Network (testnet3)"
+BLOCKCHAINS['\xcb\xf2\xc0\xef'] = "Test Network (testnet3)"
 
 NETWORKS = {}
-NETWORKS['\x00'] = "Main Network"
+NETWORKS['\x37'] = "Main Network"
 NETWORKS['\x6f'] = "Test Network"
 NETWORKS['\x34'] = "Namecoin Network"
 
@@ -938,12 +938,12 @@ BASE16CHARS  = '0123 4567 89ab cdef'.replace(' ','')
 LITTLEENDIAN  = '<';
 BIGENDIAN     = '>';
 NETWORKENDIAN = '!';
-ONE_BTC       = long(100000000)
-CENT          = long(1000000)
+ONE_BTC       = long(1000000)
+CENT          = long(10000)
 UNINITIALIZED = None
 UNKNOWN       = -2
-MIN_TX_FEE    = 10000
-MIN_RELAY_TX_FEE = 10000
+MIN_TX_FEE    = CENT
+MIN_RELAY_TX_FEE = CENT
 MT_WAIT_TIMEOUT_SEC = 20;
 
 UINT8_MAX  = 2**8-1
@@ -993,8 +993,8 @@ FORMAT_SYMBOLS = [ \
 # be valid entities for tracking in a wallet.  Until then, all of our python
 # utilities all use just hash160 values, and we manually add the prefix 
 # before talking to the BDM.
-HASH160PREFIX  = '\x00'
-P2SHPREFIX     = '\x05'
+HASH160PREFIX  = '\x37'
+P2SHPREFIX     = '\x75'
 MSIGPREFIX     = '\xfe'
 NONSTDPREFIX   = '\xff'
 def CheckHash160(scrAddr):
@@ -10398,6 +10398,30 @@ class PayloadAlert(object):
 
    def pprint(self, nIndent=0):
       print nIndent*'\t' + 'ALERT(...)'
+      
+################################################################################
+
+class PayloadCheckpoint(object):
+   """
+   All payload objects have a serialize and unserialize method, making them
+   easy to attach to PyMessage objects
+   """
+   command = 'checkpoint'
+
+   def __init__(self):
+      pass
+
+   def unserialize(self, toUnpack):
+      return self
+
+   def serialize(self):
+      return ''
+
+   def pprint(self, nIndent=0):
+      indstr = indent*nIndent
+      print ''
+      print indstr + 'Message(checkpoint)'
+      
 
 ################################################################################
 # Use this map to figure out which object to serialize/unserialize from a cmd
@@ -10413,7 +10437,8 @@ PayloadMap = {
    'getblocks':   PayloadGetBlocks,
    'block':       PayloadBlock,
    'headers':     PayloadHeaders,
-   'alert':       PayloadAlert }
+   'alert':       PayloadAlert,
+   'checkpoint':  PayloadCheckpoint }
 
 
 
@@ -11054,7 +11079,7 @@ class SatoshiDaemonManager(object):
          searchPaths.extend([os.path.join(p, 'Bitcoin') for p in possBaseDir])
 
          for p in searchPaths:
-            testPath = os.path.join(p, 'bitcoind.exe')
+            testPath = os.path.join(p, 'ppcoind.exe')
             if os.path.exists(testPath):
                self.foundExe.append(testPath)
 
@@ -11068,14 +11093,14 @@ class SatoshiDaemonManager(object):
          searchPaths.extend(['/usr/bin/', '/usr/lib/bitcoin/'])
 
          for p in searchPaths:
-            testPath = os.path.join(p, 'bitcoind')
+            testPath = os.path.join(p, 'ppcoind')
             if os.path.exists(testPath):
                self.foundExe.append(testPath)
 
          try:
-            locs = subprocess_check_output(['whereis','bitcoind']).split()
+            locs = subprocess_check_output(['whereis','ppcoind']).split()
             if len(locs)>1:
-               locs = filter(lambda x: os.path.basename(x)=='bitcoind', locs)
+               locs = filter(lambda x: os.path.basename(x)=='ppcoind', locs)
                LOGINFO('"whereis" returned: %s', str(locs))
                self.foundExe.extend(locs)
          except:
@@ -11122,13 +11147,13 @@ class SatoshiDaemonManager(object):
    
    #############################################################################
    def readBitcoinConf(self, makeIfDNE=False):
-      LOGINFO('Reading bitcoin.conf file')
-      bitconf = os.path.join( self.satoshiHome, 'bitcoin.conf' )
+      LOGINFO('Reading ppcoin.conf file')
+      bitconf = os.path.join( self.satoshiHome, 'ppcoin.conf' )
       if not os.path.exists(bitconf):
          if not makeIfDNE:
-            raise self.BitcoinDotConfError, 'Could not find bitcoin.conf'
+            raise self.BitcoinDotConfError, 'Could not find ppcoin.conf'
          else:
-            LOGINFO('No bitcoin.conf available.  Creating it...')
+            LOGINFO('No ppcoin.conf available.  Creating it...')
             touchFile(bitconf)
 
       # Guarantee that bitcoin.conf file has very strict permissions
@@ -11215,14 +11240,14 @@ class SatoshiDaemonManager(object):
 
       pargs = [self.executable]
       if USE_TESTNET:
-         pargs.append('-datadir=%s' % self.satoshiHome.rstrip('/testnet3/') )
+         pargs.append('-datadir=%s' % self.satoshiHome.rstrip('testnet') )
          pargs.append('-testnet')
       else:
          pargs.append('-datadir=%s' % self.satoshiHome)
 
       try:
          # Don't want some strange error in this size-check to abort loading
-         blocksdir = os.path.join(self.satoshiHome, 'blocks')
+         blocksdir = self.satoshiHome
          sz = long(0) 
          if os.path.exists(blocksdir):
             for fn in os.listdir(blocksdir):
